@@ -19,6 +19,8 @@ public class Updater {
 			StoredConfig config = git.getRepository().getConfig();
 			config.load();
 			
+			System.out.println(config.getString("remote", "origin", "url"));
+			
 			if (
 				config.getString("remote", "origin", "url") == null ||
 				!config.getString("remote", "origin", "url").equals(Settings.URL_REMOTE)
@@ -43,12 +45,12 @@ public class Updater {
 		}
 	}
 	
-	public static boolean check() {
+	public static int check() {
 		
 		try {
 			
-			git.fetch().setDryRun(true).call();
-			return BranchTrackingStatus.of(git.getRepository(), "master").getBehindCount() > 0;
+			//git.fetch().setRemote("origin").setDryRun(true).call();
+			return BranchTrackingStatus.of(git.getRepository(), "master").getBehindCount();
 		}
 		
 		catch (Exception e) {
@@ -56,7 +58,7 @@ public class Updater {
 			e.printStackTrace();
 		}
 		
-		return false;
+		return -1;
 	}
 	
 	public static void update() throws Exception {
