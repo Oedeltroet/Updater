@@ -49,7 +49,7 @@ public class Updater {
 		
 		try {
 			
-			git.fetch().setRemote("origin").setDryRun(true).call();
+			git.fetch().setRemote("origin").call();
 			return BranchTrackingStatus.of(git.getRepository(), "master").getBehindCount();
 		}
 		
